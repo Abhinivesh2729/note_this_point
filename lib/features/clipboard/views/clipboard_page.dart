@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_this_point/app/colors/app_colors.dart';
 import '../bloc/clipboard_bloc.dart';
 import '../bloc/clipboard_event.dart';
 import '../bloc/clipboard_state.dart';
@@ -44,7 +45,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
         title: const Text(
           'Clipboard History',
           style: TextStyle(
-            color: Colors.black,
+            color: AppColors.primary,
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
@@ -57,20 +58,34 @@ class _ClipboardPageState extends State<ClipboardPage> {
                   enabled: false,
                   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: Container(
-                    margin: const EdgeInsets.only(right: 8),
+                    height: 42,width: 42,
+                    margin: const EdgeInsets.only(right: 20),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [ 
-                          Colors.pink.withValues(alpha: 0.05),
-                          Colors.blue.withValues(alpha: 0.05),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(12),
+                       borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(
+              colors: [
+                Colors.pink.withValues(alpha: 0.05),
+                Colors.blue.withValues(alpha: 0.05),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            border: Border.all(
+              color: AppColors.primary.withValues(alpha: 0.2),
+              width: 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
                     ),
                     child: IconButton(
                       icon: const Icon(
                         Icons.delete_sweep,
-                        color: Color(0xFF5D4037),
+                        color: AppColors.primary,
                       ),
                       onPressed: () => _showClearConfirmation(context),
                     ),
@@ -87,13 +102,11 @@ class _ClipboardPageState extends State<ClipboardPage> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              const Color(0xFFFFFFFF).withValues(alpha: 0.8), // Soft white
-              const Color(0xFF8EC5FC).withValues(alpha: 0.5), // Light sky blue
-              const Color(
-                0xFFE0C3FC,
-              ).withValues(alpha: 0.3), // Soft purple// very light tint
-            ],
+          colors: [
+            const Color.fromARGB(255, 207, 214, 254).withValues(alpha: 0.8), // Soft white
+            const Color.fromARGB(255, 177, 191, 255).withValues(alpha: 0.5), // Light sky blue
+            const Color.fromARGB(255, 213, 218, 247).withValues(alpha: 0.3), // Soft purple// very light tint
+          ],
           ),
         ),
         child: SafeArea(
@@ -193,9 +206,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                         borderRadius: BorderRadius.circular(32),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(
-                              0xFFFFD54F,
-                            ).withValues(alpha: 0.2),
+                            color: const Color.fromARGB(255, 88, 123, 202).withValues(alpha: 0.35),
                             blurRadius: 30,
                             offset: const Offset(0, 15),
                           ),
@@ -209,12 +220,8 @@ class _ClipboardPageState extends State<ClipboardPage> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  const Color(
-                                    0xFFFFD54F,
-                                  ).withValues(alpha: 0.2),
-                                  const Color(
-                                    0xFFFFE082,
-                                  ).withValues(alpha: 0.1),
+                                   AppColors.blue.withValues(alpha: 0.2),
+                                   AppColors.blue.withValues(alpha: 0.1),
                                 ],
                               ),
                               shape: BoxShape.circle,
@@ -222,7 +229,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                             child: const Icon(
                               Icons.content_paste_off,
                               size: 64,
-                              color: Color(0xFF5D4037),
+                              color: AppColors.primary,
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -231,7 +238,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF5D4037),
+                              color: AppColors.gray,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -252,9 +259,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                                 vertical: 12,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(
-                                  0xFFFFD54F,
-                                ).withValues(alpha: 0.15),
+                                color: AppColors.blue.withValues(alpha: 0.15),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(
@@ -265,10 +270,8 @@ class _ClipboardPageState extends State<ClipboardPage> {
                                     height: 16,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: const Color(0xFF5D4037),
-                                      backgroundColor: const Color(
-                                        0xFFFFD54F,
-                                      ).withValues(alpha: 0.3),
+                                      color:  AppColors.gray,
+                                      backgroundColor: AppColors.lightBlue.withValues(alpha: 0.3),
                                     ),
                                   ),
                                   const SizedBox(width: 12),
@@ -276,7 +279,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                                     'Monitoring clipboard...',
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Color(0xFF5D4037),
+                                      color: AppColors.primary,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -373,7 +376,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
             'Added from clipboard',
             style: TextStyle(color: Color(0xFF5D4037)),
           ),
-          backgroundColor: const Color(0xFFFFD54F),
+          backgroundColor:AppColors.primary,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -426,13 +429,13 @@ class _ClipboardPageState extends State<ClipboardPage> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFD54F).withValues(alpha: 0.2),
+                    color: AppColors.lightBlue.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.delete_sweep,
                     size: 32,
-                    color: Color(0xFF5D4037),
+                    color: AppColors.primary,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -484,7 +487,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                         Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFFD54F),
+                        backgroundColor: AppColors.primary,
                         foregroundColor: const Color(0xFF5D4037),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 32,
@@ -497,7 +500,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                       ),
                       child: const Text(
                         'Clear',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.background),
                       ),
                     ),
                   ],

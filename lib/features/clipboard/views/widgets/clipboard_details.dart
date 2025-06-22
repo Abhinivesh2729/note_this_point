@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../../../app/colors/app_colors.dart';
 import '../../../notes/models/note_item.dart';
 
 class ClipboardDetailPage extends StatefulWidget {
@@ -30,7 +31,8 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeOutQuart),
     );
-    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeOutQuart),
     );
     _animationController.forward();
@@ -58,7 +60,7 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
         title: const Text(
           'Clipboard Item',
           style: TextStyle(
-            color: Colors.black,
+            color: AppColors.primary,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -74,11 +76,12 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFFFFFFFF).withValues(alpha: 0.8), // Soft white
-            const Color(0xFF8EC5FC).withValues(alpha: 0.5), // Light sky blue
-            const Color(
-              0xFFE0C3FC
-            ).withValues(alpha: 0.3), 
+              const Color.fromARGB(255, 207, 214, 254)
+                  .withValues(alpha: 0.8), // Soft white
+              const Color.fromARGB(255, 177, 191, 255)
+                  .withValues(alpha: 0.5), // Light sky blue
+              const Color.fromARGB(255, 213, 218, 247)
+                  .withValues(alpha: 0.3), // Soft purple// very light tint
             ],
           ),
         ),
@@ -95,16 +98,23 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
                     _glassCard(
                       child: Row(
                         children: [
-                          Icon(Icons.access_time_rounded, color: Colors.black.withValues(alpha: 0.5)),
+                          Icon(Icons.access_time_rounded,
+                              color: AppColors.primary),
                           const SizedBox(width: 16),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Created', style: TextStyle(fontSize: 12, color: Colors.black.withValues(alpha: 0.5))),
+                              Text('Created',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color:
+                                          Colors.black.withValues(alpha: 0.5))),
                               const SizedBox(height: 4),
                               Text(
                                 dateFormat.format(widget.item.createdAt),
-                                style: TextStyle(color: Colors.black.withValues(alpha: 0.5), fontSize: 16),
+                                style: TextStyle(
+                                    color: Colors.black.withValues(alpha: 0.5),
+                                    fontSize: 16),
                               ),
                             ],
                           )
@@ -116,7 +126,10 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
                       padding: const EdgeInsets.all(20),
                       child: SelectableText(
                         widget.item.content,
-                        style: TextStyle(color: Colors.black.withValues(alpha: 0.5), fontSize: 16, height: 1.6),
+                        style: TextStyle(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            fontSize: 16,
+                            height: 1.6),
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -149,7 +162,8 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
     );
   }
 
-  Widget _glassCard({required Widget child, EdgeInsets padding = const EdgeInsets.all(16)}) {
+  Widget _glassCard(
+      {required Widget child, EdgeInsets padding = const EdgeInsets.all(16)}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: BackdropFilter(
@@ -159,7 +173,8 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.5), width: 1.0),
+            border: Border.all(
+                color: Colors.white.withValues(alpha: 0.5), width: 1.0),
           ),
           child: child,
         ),
@@ -184,21 +199,26 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
         ),
         padding: const EdgeInsets.symmetric(vertical: 14),
       ),
-      icon: Icon(icon, size: 18),
+      icon: Icon(
+        icon,
+        size: 18,
+        color: AppColors.primary,
+      ),
       label: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
     );
   }
 
-  Widget _glassIconButton({required IconData icon, required VoidCallback onPressed}) {
+  Widget _glassIconButton(
+      {required IconData icon, required VoidCallback onPressed}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          color: Colors.white.withValues(alpha: 0.15),
+          //  color: Colors.white.withValues(alpha: 0.15),
           margin: const EdgeInsets.all(8),
           child: IconButton(
-            icon: Icon(icon, color: Colors.black),
+            icon: Icon(icon, color: AppColors.primary),
             onPressed: onPressed,
           ),
         ),
@@ -208,7 +228,7 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
 
   Widget _glassPopupMenu() {
     return PopupMenuButton<String>(
-      icon: const Icon(Icons.more_vert, color: Colors.black),
+      icon: const Icon(Icons.more_vert, color: AppColors.primary),
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 16,

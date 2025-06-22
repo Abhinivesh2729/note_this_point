@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_this_point/app/colors/app_colors.dart';
 import 'package:note_this_point/core/app_constants.dart';
 import '../bloc/notes_bloc.dart';
 import '../bloc/notes_event.dart';
@@ -39,11 +40,11 @@ class _NotesPageState extends State<NotesPage>
 
     _slideAnimation =
         Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: Curves.easeOutQuart,
-          ),
-        );
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeOutQuart,
+      ),
+    );
 
     _animationController.forward();
   }
@@ -57,12 +58,15 @@ class _NotesPageState extends State<NotesPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF8E1),
+      // backgroundColor: const Color(0xFFFFF8E1),
       extendBodyBehindAppBar: true,
       appBar: _buildAppBar(),
       body: _buildBody(),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 170.0),
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height / 8.7, right: 10),
         child: _buildFAB(),
       ),
     );
@@ -73,12 +77,18 @@ class _NotesPageState extends State<NotesPage>
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: Text(
-        'My Notes',
+        'Notes',
         style: TextStyle(
-          color: AppConstants.textColor,
+          color: AppColors.primary,
           fontWeight: FontWeight.bold,
           fontSize: 24,
         ),
+      ),
+      leadingWidth: 70,
+      toolbarHeight: 46,
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 5.0),
+        child: _buildPopupMenu(),
       ),
       actions: [
         _buildActionButton(
@@ -86,7 +96,6 @@ class _NotesPageState extends State<NotesPage>
           onPressed: () => setState(() => _isGridView = !_isGridView),
           tooltip: _isGridView ? 'List View' : 'Grid View',
         ),
-        _buildPopupMenu(),
       ],
     );
   }
@@ -97,13 +106,15 @@ class _NotesPageState extends State<NotesPage>
     required String tooltip,
   }) {
     return Container(
-      margin: const EdgeInsets.only(right: 8),
+      margin: const EdgeInsets.only(right: 20, top: 5),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
           child: Container(
+            height: 42,
+            width: 42,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -115,7 +126,7 @@ class _NotesPageState extends State<NotesPage>
               ),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Colors.white.withValues(alpha: 0.2),
+                color: AppColors.primary.withValues(alpha: 0.2),
                 width: 1.2,
               ),
               boxShadow: [
@@ -126,10 +137,12 @@ class _NotesPageState extends State<NotesPage>
                 ),
               ],
             ),
-            child: IconButton(
-              icon: Icon(icon, color: Colors.white.withValues(alpha: 0.85)),
-              onPressed: onPressed,
-              tooltip: tooltip,
+            child: Center(
+              child: IconButton(
+                icon: Icon(icon, color: AppColors.primary),
+                onPressed: onPressed,
+                tooltip: tooltip,
+              ),
             ),
           ),
         ),
@@ -143,7 +156,9 @@ class _NotesPageState extends State<NotesPage>
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          margin: const EdgeInsets.only(right: 8),
+          height: 42,
+          width: 42,
+          margin: const EdgeInsets.only(left: 26),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             gradient: LinearGradient(
@@ -155,7 +170,7 @@ class _NotesPageState extends State<NotesPage>
               end: Alignment.bottomRight,
             ),
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: AppColors.primary.withValues(alpha: 0.2),
               width: 1.2,
             ),
             boxShadow: [
@@ -167,12 +182,12 @@ class _NotesPageState extends State<NotesPage>
             ],
           ),
           child: PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
+            icon: const Icon(Icons.more_vert_rounded, color: AppColors.primary),
             color: Colors.white.withValues(
               alpha: 0.85,
             ), // Semi-transparent popup
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(13),
               side: BorderSide(
                 color: Colors.white.withValues(alpha: 0.2),
                 width: 1.0,
@@ -232,7 +247,7 @@ class _NotesPageState extends State<NotesPage>
             decoration: BoxDecoration(
               color: isDelete
                   ? Colors.red.withValues(alpha: 0.1)
-                  : const Color(0xFFFFD54F).withValues(alpha: 0.2),
+                  : AppColors.lightBlue.withValues(alpha: 0.4),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -261,9 +276,11 @@ class _NotesPageState extends State<NotesPage>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFFFFFFFF).withValues(alpha: 0.8), // Soft white
-            const Color(0xFF8EC5FC).withValues(alpha: 0.5), // Light sky blue
-            const Color(0xFFE0C3FC).withValues(alpha: 0.3), // Soft purple// very light tint
+            Color.fromARGB(255, 213, 213, 247), // Soft white
+            const Color.fromARGB(255, 158, 176, 215)
+                .withValues(alpha: 0.5), // Light sky blue
+            const Color.fromARGB(255, 195, 200, 225)
+                .withValues(alpha: 0.3), // Soft purple// very light tint
           ],
         ),
       ),
@@ -298,7 +315,7 @@ class _NotesPageState extends State<NotesPage>
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFFFFD54F).withValues(alpha: 0.3),
+              color: AppColors.primary.withValues(alpha: 0.3),
               blurRadius: 30,
               offset: const Offset(0, 15),
             ),
@@ -312,15 +329,17 @@ class _NotesPageState extends State<NotesPage>
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    const Color(0xFFFFD54F).withValues(alpha: 0.3),
-                    const Color(0xFFFFE082).withValues(alpha: 0.2),
+                    const Color.fromARGB(255, 202, 215, 239)
+                        .withValues(alpha: 0.3),
+                    const Color.fromARGB(255, 202, 215, 239)
+                        .withValues(alpha: 0.2),
                   ],
                 ),
                 shape: BoxShape.circle,
               ),
               child: CircularProgressIndicator(
                 color: const Color(0xFF5D4037),
-                backgroundColor: const Color(0xFFFFD54F).withValues(alpha: 0.3),
+                backgroundColor: AppColors.lightBlue.withValues(alpha: 0.3),
                 strokeWidth: 3,
               ),
             ),
@@ -342,14 +361,20 @@ class _NotesPageState extends State<NotesPage>
   Widget _buildEmptyState() {
     return Center(
       child: Container(
-        margin: const EdgeInsets.all(32),
-        padding: const EdgeInsets.all(40),
+        margin: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.9),
           borderRadius: BorderRadius.circular(32),
+          border: Border.all(
+            color:
+                const Color.fromARGB(255, 88, 123, 202).withValues(alpha: 0.25),
+            width: 2,
+          ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFFFFD54F).withValues(alpha: 0.2),
+              color: const Color.fromARGB(255, 88, 123, 202)
+                  .withValues(alpha: 0.35),
               blurRadius: 30,
               offset: const Offset(0, 15),
             ),
@@ -357,14 +382,18 @@ class _NotesPageState extends State<NotesPage>
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 25),
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    const Color(0xFFFFD54F).withValues(alpha: 0.2),
-                    const Color(0xFFFFE082).withValues(alpha: 0.1),
+                    const Color.fromARGB(255, 208, 221, 242)
+                        .withValues(alpha: 0.2),
+                    const Color.fromARGB(255, 94, 122, 172)
+                        .withValues(alpha: 0.1),
                   ],
                 ),
                 shape: BoxShape.circle,
@@ -372,24 +401,24 @@ class _NotesPageState extends State<NotesPage>
               child: const Icon(
                 Icons.note_add_rounded,
                 size: 64,
-                color: Color(0xFF5D4037),
+                color: AppColors.primary,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 25),
             const Text(
               'No notes yet',
               style: TextStyle(
                 fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF5D4037),
+                fontWeight: FontWeight.w800,
+                color: AppColors.gray,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             Text(
               'Tap the + button to create your first note',
               style: TextStyle(
                 fontSize: 16,
-                color: const Color(0xFF5D4037).withValues(alpha: 0.7),
+                color: AppColors.gray,
               ),
               textAlign: TextAlign.center,
             ),
@@ -521,14 +550,14 @@ class _NotesPageState extends State<NotesPage>
   }) {
     return Container(
       decoration: BoxDecoration(
-        gradient:  LinearGradient(
+        gradient: LinearGradient(
           colors: [Colors.blue.withValues(alpha: 0.1)],
         ),
         borderRadius: BorderRadius.circular(20),
       ),
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: Icon(icon, color:  Colors.black, size: 24),
+        icon: Icon(icon, color: Colors.black, size: 24),
         label: Text(
           label,
           style: const TextStyle(
@@ -553,15 +582,17 @@ class _NotesPageState extends State<NotesPage>
   Widget _buildFAB() {
     return FloatingActionButton(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(30),
       ),
-      backgroundColor: Colors.blue.withValues(alpha: 0.3),
+      backgroundColor: AppColors.primary.withValues(alpha: 0.11),
       onPressed: _createNewNote,
       elevation: 0,
+      hoverElevation: 3,
+      hoverColor: AppColors.primary.withValues(alpha: 0.2),
       tooltip: 'Add Note',
       child: const Icon(
         Icons.add_rounded,
-        color: Colors.white,
+        color: AppColors.primary,
         size: 28,
       ),
     );
@@ -591,7 +622,7 @@ class _NotesPageState extends State<NotesPage>
           'Share functionality coming soon',
           style: TextStyle(color: Color(0xFF5D4037)),
         ),
-        backgroundColor: const Color(0xFFFFD54F),
+        backgroundColor: AppColors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
@@ -620,7 +651,7 @@ class _NotesPageState extends State<NotesPage>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 48, color: const Color(0xFF5D4037)),
+              Icon(icon, size: 48, color: AppColors.primary),
               const SizedBox(height: 16),
               Text(
                 title,
@@ -640,13 +671,16 @@ class _NotesPageState extends State<NotesPage>
               ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFFD54F),
+                  backgroundColor: AppColors.primary,
                   foregroundColor: const Color(0xFF5D4037),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('OK'),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: AppColors.background),
+                ),
               ),
             ],
           ),

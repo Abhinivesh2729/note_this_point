@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:note_this_point/app/colors/app_colors.dart';
 
 /// AI Chat Page UI with Coming Soon message
 class ChatPage extends StatefulWidget {
@@ -67,26 +68,28 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
         title: Text(
           'AI Assistant',
           style: GoogleFonts.poppins(
-            color: const Color(0xFF5D4037),
+            color: AppColors.primary,
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.purple.withValues(alpha: 0.1),
-              Colors.blue.withValues(alpha: 0.05),
-              Colors.cyan.withValues(alpha: 0.03),
-              const Color(0xFFFFF8E1),
-            ],
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+            const Color.fromARGB(255, 250, 219, 254).withValues(alpha: 0.8), // Soft white
+            const Color.fromARGB(255, 164, 203, 242)
+                .withValues(alpha: 0.5), // Light sky blue
+            const Color.fromARGB(255, 230, 232, 245)
+                .withValues(alpha: 0.3), // Soft purple// very light tint
+          ],
+            ),
           ),
-        ),
-        child: SafeArea(
           child: Stack(
             children: [
               // Animated background shapes
@@ -96,14 +99,14 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                 child: FadeTransition(
                   opacity: _fadeAnimation,
                   child: Container(
-                    width: 150,
-                    height: 150,
+                    width: 100,
+                    height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          Colors.purple.withValues(alpha: 0.1),
-                          Colors.purple.withValues(alpha: 0.0),
+                          const Color.fromARGB(255, 147, 207, 241).withValues(alpha: 0.1),
+                              const Color.fromARGB(255, 147, 207, 241).withValues(alpha: 0.05),
                         ],
                       ),
                     ),
@@ -116,8 +119,8 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                 child: FadeTransition(
                   opacity: _fadeAnimation,
                   child: Container(
-                    width: 200,
-                    height: 200,
+                    width: 100,
+                    height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
@@ -131,20 +134,22 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                 ),
               ),
               // Main content
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(height: 100,),
                       // AI Icon with animation
                       FadeTransition(
                         opacity: _fadeAnimation,
                         child: ScaleTransition(
                           scale: _scaleAnimation,
                           child: Container(
-                            width: 120,
-                            height: 120,
+                            width: 110,
+                            height: 110,
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
@@ -195,7 +200,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                           ),
                         ),
                       ),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 26),
                       // Coming Soon text
                       SlideTransition(
                         position: _slideAnimation,
@@ -208,7 +213,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                                 style: GoogleFonts.poppins(
                                   fontSize: 32,
                                   fontWeight: FontWeight.bold,
-                                  color: const Color(0xFF5D4037),
+                                  color: AppColors.primary,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -239,13 +244,13 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 24),
+                              const SizedBox(height: 20),
                               Erode()
                             ],
                           ),
                         ),
                       ),
-                      const SizedBox(height: 48),
+                      const SizedBox(height: 20),
                       // Feature preview
                       FadeTransition(
                         opacity: _fadeAnimation,

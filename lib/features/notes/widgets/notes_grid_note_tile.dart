@@ -55,117 +55,97 @@ class _GridNoteTileState extends State<GridNoteTile>
 
     return ScaleTransition(
       scale: _scaleAnimation,
-      child: Material(
-        elevation: 20,
-        color: Colors.transparent,
-        shadowColor: const Color(0xFFFFD54F).withAlpha(77),
+      child: InkWell(
+        onTap: widget.onTap,
+        onTapDown: (_) => _animationController.forward(),
+        onTapUp: (_) => _animationController.reverse(),
+        onTapCancel: () => _animationController.reverse(),
         borderRadius: BorderRadius.circular(20),
-        child: InkWell(
-          onTap: widget.onTap,
-          onTapDown: (_) => _animationController.forward(),
-          onTapUp: (_) => _animationController.reverse(),
-          onTapCancel: () => _animationController.reverse(),
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isEmptyNote
-                    ? [
-                        Colors.grey.withAlpha(25),
-                        Colors.grey.withAlpha(13),
-                      ]
-                    : [
-                        Colors.white.withAlpha(242),
-                        Colors.white.withAlpha(217),
-                      ],
-              ),
-              borderRadius: BorderRadius.circular(20),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.18),
+              borderRadius: BorderRadius.circular(18),
               border: Border.all(
-                color: isEmptyNote
-                    ? Colors.grey.withAlpha(51)
-                    : const Color(0xFFFFD54F).withAlpha(51),
-                width: 1,
+                color: Colors.white.withValues(alpha: 0.25),
+                width: 1.2,
               ),
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: isEmptyNote
-                            ? Colors.grey.withAlpha(153)
-                            : const Color(0xFF5D4037),
-                        height: 1.2,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: isEmptyNote
+                          ? Colors.grey.withAlpha(153)
+                          : const Color(0xFF5D4037),
+                      height: 1.2,
                     ),
-
-                    const SizedBox(height: 12),
-
-                    // Content Preview
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+      
+                  const SizedBox(height: 12),
+      
+                  // Content Preview
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: isEmptyNote
+                          ? Colors.grey.withAlpha(13)
+                          : const Color(0xFF5D4037).withAlpha(13),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
                         color: isEmptyNote
-                            ? Colors.grey.withAlpha(13)
-                            : const Color(0xFF5D4037).withAlpha(13),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: isEmptyNote
-                              ? Colors.grey.withAlpha(25)
-                              : const Color(0xFF5D4037).withAlpha(25),
-                          width: 1,
-                        ),
+                            ? Colors.grey.withAlpha(25)
+                            : const Color(0xFF5D4037).withAlpha(25),
+                        width: 1,
                       ),
-                      child: preview.isNotEmpty
-                          ? Text(
-                              preview,
-                              style: TextStyle(
-                                fontSize: 11,
-                                height: 1.3,
-                                color: isEmptyNote
-                                    ? Colors.grey.withAlpha(153)
-                                    : const Color(0xFF5D4037).withAlpha(180),
+                    ),
+                    child: preview.isNotEmpty
+                        ? Text(
+                            preview,
+                            style: TextStyle(
+                              fontSize: 11,
+                              height: 1.3,
+                              color: isEmptyNote
+                                  ? Colors.grey.withAlpha(153)
+                                  : const Color(0xFF5D4037).withAlpha(180),
+                            ),
+                            maxLines: 10, // You can increase or remove this
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Row(
+                            children: [
+                              Icon(
+                                Icons.edit_outlined,
+                                size: 12,
+                                color: Colors.grey.withAlpha(128),
                               ),
-                              maxLines: 10, // You can increase or remove this
-                              overflow: TextOverflow.ellipsis,
-                            )
-                          : Row(
-                              children: [
-                                Icon(
-                                  Icons.edit_outlined,
-                                  size: 12,
-                                  color: Colors.grey.withAlpha(128),
-                                ),
-                                const SizedBox(width: 4),
-                                Expanded(
-                                  child: Text(
-                                    'Tap to start writing...',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontStyle: FontStyle.italic,
-                                      color: Colors.grey.withAlpha(153),
-                                    ),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  'Tap to start writing...',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.grey.withAlpha(153),
                                   ),
                                 ),
-                              ],
-                            ),
-                    ),
-                  ],
-                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ],
               ),
             ),
           ),

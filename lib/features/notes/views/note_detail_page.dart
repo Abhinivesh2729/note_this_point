@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_this_point/app/colors/app_colors.dart';
 import 'package:share_plus/share_plus.dart';
 import '../bloc/notes_bloc.dart';
 import '../bloc/notes_event.dart';
@@ -101,9 +102,9 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFFF5F5F7),
-              Color(0xFFE8E8ED),
-              Color(0xFFF5F5F7),
+              Color.fromARGB(255, 231, 231, 249),
+              Color.fromARGB(255, 213, 213, 247),
+              Color.fromARGB(255, 219, 219, 250),
             ],
           ),
         ),
@@ -223,6 +224,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
+      leadingWidth: 72,
       leading: Container(
         margin: const EdgeInsets.all(8),
         child: ClipRRect(
@@ -230,17 +232,18 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
+              margin: EdgeInsets.only(left: 8),
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.3),
+                  color: AppColors.primary.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
               child: IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new, size: 20),
-                color: Colors.black87,
+                color: AppColors.primary,
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
@@ -260,13 +263,13 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                   color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.3),
+                    color: AppColors.primary.withValues(alpha: 0.3),
                     width: 1,
                   ),
                 ),
                 child: IconButton(
                   icon: const Icon(Icons.share_outlined, size: 20),
-                  color: Colors.black87,
+                  color: AppColors.primary,
                   onPressed: _onShare,
                 ),
               ),
@@ -275,7 +278,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
         ),
         // Delete button
         Container(
-          margin: const EdgeInsets.only(top: 8, right: 8, bottom: 8),
+          margin: const EdgeInsets.only(top: 8, right: 15, bottom: 8),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: BackdropFilter(
