@@ -64,9 +64,11 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0,
         elevation: 0,
         title: Text(
           'AI Assistant',
+          
           style: GoogleFonts.poppins(
             color: AppColors.primary,
             fontWeight: FontWeight.bold,
@@ -74,228 +76,234 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-            const Color.fromARGB(255, 250, 219, 254).withValues(alpha: 0.8), // Soft white
-            const Color.fromARGB(255, 164, 203, 242)
-                .withValues(alpha: 0.5), // Light sky blue
-            const Color.fromARGB(255, 230, 232, 245)
-                .withValues(alpha: 0.3), // Soft purple// very light tint
-          ],
-            ),
-          ),
-          child: Stack(
-            children: [
-              // Animated background shapes
-              Positioned(
-                top: 50,
-                right: -50,
-                child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [
-                          const Color.fromARGB(255, 147, 207, 241).withValues(alpha: 0.1),
-                              const Color.fromARGB(255, 147, 207, 241).withValues(alpha: 0.05),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 200,
-                left: -80,
-                child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [
-                          Colors.blue.withValues(alpha: 0.08),
-                          Colors.blue.withValues(alpha: 0.0),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // Main content
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 100,),
-                      // AI Icon with animation
-                      FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: ScaleTransition(
-                          scale: _scaleAnimation,
-                          child: Container(
-                            width: 110,
-                            height: 110,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color(0xFF9C27B0),
-                                  Color(0xFF2196F3),
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.purple.withValues(alpha: 0.3),
-                                  blurRadius: 30,
-                                  offset: const Offset(0, 15),
-                                ),
-                              ],
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.auto_awesome,
-                                  size: 60,
-                                  color: Colors.white,
-                                ),
-                                // Animated sparkles
-                                _buildSparkle(
-                                  top: 20,
-                                  right: 25,
-                                  delay: 0.5,
-                                  size: 12,
-                                ),
-                                _buildSparkle(
-                                  bottom: 25,
-                                  left: 20,
-                                  delay: 0.8,
-                                  size: 10,
-                                ),
-                                _buildSparkle(
-                                  top: 35,
-                                  left: 15,
-                                  delay: 1.1,
-                                  size: 8,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 26),
-                      // Coming Soon text
-                      SlideTransition(
-                        position: _slideAnimation,
-                        child: FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Column(
-                            children: [
-                              Text(
-                                'AI Chat',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 24,
-                                  vertical: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.purple.withValues(alpha: 0.1),
-                                      Colors.blue.withValues(alpha: 0.1),
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                    color: Colors.purple.withValues(alpha: 0.2),
-                                    width: 1.5,
-                                  ),
-                                ),
-                                child: Text(
-                                  'Coming Soon',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.purple[700],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Erode()
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      // Feature preview
-                      FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Container(
-                          padding: const EdgeInsets.all(24),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.7),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.05),
-                                blurRadius: 20,
-                                offset: const Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              _buildFeatureItem(
-                                icon: Icons.psychology,
-                                text: 'Smart note analysis',
-                                delay: 0.8,
-                              ),
-                              const SizedBox(height: 16),
-                              _buildFeatureItem(
-                                icon: Icons.edit_note,
-                                text: 'Writing assistance',
-                                delay: 1.0,
-                              ),
-                              const SizedBox(height: 16),
-                              _buildFeatureItem(
-                                icon: Icons.lightbulb_outline,
-                                text: 'Creative suggestions',
-                                delay: 1.2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 200, 200, 236), // Soft white
+              const Color.fromARGB(255, 206, 217, 241)
+                  .withValues(alpha: 0.5), // Light sky blue
+              const Color.fromARGB(255, 207, 216, 254)
+                  .withValues(alpha: 0.3), // Soft purple// very light tint
             ],
           ),
+        ),
+        child: Stack(
+          children: [
+            // Animated background shapes
+            Positioned(
+              top: 50,
+              right: -50,
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        const Color.fromARGB(255, 147, 207, 241).withValues(alpha: 0.1),
+                        const Color.fromARGB(255, 147, 207, 241).withValues(alpha: 0.05),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 100,
+              left: -80,
+              child: FadeTransition(
+                opacity: _fadeAnimation,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        Colors.blue.withValues(alpha: 0.08),
+                        Colors.blue.withValues(alpha: 0.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Main scrollable content
+            SafeArea(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height - 
+                               MediaQuery.of(context).padding.top - 
+                               kToolbarHeight,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      
+                        FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: ScaleTransition(
+                            scale: _scaleAnimation,
+                            child: Container(
+                              width: 110,
+                              height: 110,
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xFF9C27B0),
+                                    Color(0xFF2196F3),
+                                  ],
+                                ),
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.purple.withValues(alpha: 0.3),
+                                    blurRadius: 30,
+                                    offset: const Offset(0, 15),
+                                  ),
+                                ],
+                              ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.auto_awesome,
+                                    size: 60,
+                                    color: Colors.white,
+                                  ),
+                                  // Animated sparkles
+                                  _buildSparkle(
+                                    top: 20,
+                                    right: 25,
+                                    delay: 0.5,
+                                    size: 12,
+                                  ),
+                                  _buildSparkle(
+                                    bottom: 25,
+                                    left: 20,
+                                    delay: 0.8,
+                                    size: 10,
+                                  ),
+                                  _buildSparkle(
+                                    top: 35,
+                                    left: 15,
+                                    delay: 1.1,
+                                    size: 8,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 26),
+                        // Coming Soon text
+                        SlideTransition(
+                          position: _slideAnimation,
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'AI Chat',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 12,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.purple.withValues(alpha: 0.1),
+                                        Colors.blue.withValues(alpha: 0.1),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(
+                                      color: Colors.purple.withValues(alpha: 0.2),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Coming Soon',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.purple[700],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                const Erode()
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        // Feature preview
+                        FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: Container(
+                            padding: const EdgeInsets.all(24),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.7),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.05),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 10),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                _buildFeatureItem(
+                                  icon: Icons.psychology,
+                                  text: 'Smart note analysis',
+                                  delay: 0.8,
+                                ),
+                                const SizedBox(height: 16),
+                                _buildFeatureItem(
+                                  icon: Icons.edit_note,
+                                  text: 'Writing assistance',
+                                  delay: 1.0,
+                                ),
+                                const SizedBox(height: 16),
+                                _buildFeatureItem(
+                                  icon: Icons.lightbulb_outline,
+                                  text: 'Creative suggestions',
+                                  delay: 1.2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

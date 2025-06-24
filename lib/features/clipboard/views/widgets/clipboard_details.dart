@@ -170,6 +170,7 @@ class _ClipboardDetailPageState extends State<ClipboardDetailPage>
         filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
         child: Container(
           padding: padding,
+          width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),

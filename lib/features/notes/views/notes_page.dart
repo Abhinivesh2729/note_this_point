@@ -498,8 +498,8 @@ class _NotesPageState extends State<NotesPage>
   Widget _buildNotesView(List<NoteItem> notes) {
     return RefreshIndicator(
       onRefresh: () async => context.read<NotesBloc>().add(LoadNotes()),
-      color: const Color(0xFF5D4037),
-      backgroundColor: const Color(0xFFFFD54F),
+      color: AppColors.background,
+      backgroundColor: AppColors.primary,
       child: _isGridView ? _buildGridView(notes) : _buildListView(notes),
     );
   }
@@ -583,8 +583,13 @@ class _NotesPageState extends State<NotesPage>
     return FloatingActionButton(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
+         side: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.25),
+                  width: 1,
+                ),
       ),
-      backgroundColor: AppColors.primary.withValues(alpha: 0.11),
+      backgroundColor: AppColors.primary.withValues(alpha: 0.06),
+      
       onPressed: _createNewNote,
       elevation: 0,
       hoverElevation: 3,

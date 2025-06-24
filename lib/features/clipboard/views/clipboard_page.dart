@@ -116,9 +116,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                 return Center(
                   child: CircularProgressIndicator(
                     color: const Color(0xFF5D4037),
-                    backgroundColor: const Color(
-                      0xFFFFD54F,
-                    ).withValues(alpha: 0.3),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.3),
                   ),
                 );
               }
@@ -145,9 +143,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: const Color(
-                              0xFFFFD54F,
-                            ).withValues(alpha: 0.2),
+                            color: AppColors.primary.withValues(alpha: 0.2),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -173,7 +169,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFFFD54F),
+                            backgroundColor: AppColors.primary,
                             foregroundColor: const Color(0xFF5D4037),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32,
@@ -297,8 +293,8 @@ class _ClipboardPageState extends State<ClipboardPage> {
                   onRefresh: () async {
                     context.read<ClipboardBloc>().add(LoadClipboardHistory());
                   },
-                  color: const Color(0xFF5D4037),
-                  backgroundColor: const Color(0xFFFFD54F),
+                  color: AppColors.background,
+                  backgroundColor: AppColors.primary,
                   child: ListView.builder(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
                     itemCount: state.clipboardItems.length,
@@ -336,12 +332,9 @@ class _ClipboardPageState extends State<ClipboardPage> {
       SnackBar(
         content: const Text(
           'Copied to clipboard',
-          style: TextStyle(color: Color(0xFF5D4037)),
+          style: TextStyle(color: AppColors.background),
         ),
-        backgroundColor: const Color(0xFFFFD54F),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        margin: const EdgeInsets.all(16),
+        backgroundColor: AppColors.primary,
         duration: const Duration(seconds: 1),
       ),
     );
@@ -355,7 +348,7 @@ class _ClipboardPageState extends State<ClipboardPage> {
           'Item deleted',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF5D4037),
+        backgroundColor: AppColors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
