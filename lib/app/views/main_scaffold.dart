@@ -1,6 +1,7 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:note_this_point/app/colors/app_colors.dart';
 import '../../features/notes/views/notes_page.dart';
 import '../../features/clipboard/views/clipboard_page.dart';
 import '../../features/chat/views/chat_page.dart';
@@ -63,9 +64,9 @@ class _MainScaffoldState extends State<MainScaffold> {
       ),
       // Prevents bottom sheet from interfering with the bottom bar
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0, left: 12.0, right: 12.0),
+        padding: const EdgeInsets.only(bottom: 5.0, ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(15),
           child: AnimatedNotchBottomBar(
             notchBottomBarController: _notchController,
             bottomBarItems: [
@@ -74,7 +75,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                   Icons.note_outlined,
                   color: Colors.grey,
                 ),
-                activeItem: const Icon(Icons.note, color: Color(0xFF4A90E2)),
+                activeItem: const Icon(Icons.note, color: AppColors.primary),
                 itemLabel: 'Notes',
               ),
               BottomBarItem(
@@ -84,7 +85,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                 ),
                 activeItem: const Icon(
                   Icons.content_paste,
-                  color: Color(0xFF4A90E2),
+                  color: AppColors.primary,
                 ),
                 itemLabel: 'Clipboard',
               ),
@@ -95,7 +96,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                 ),
                 activeItem: const Icon(
                   Icons.chat_bubble,
-                  color: Color(0xFF4A90E2),
+                  color:  AppColors.primary,
                 ),
                 itemLabel: 'AI Chat',
               ),
@@ -112,7 +113,7 @@ class _MainScaffoldState extends State<MainScaffold> {
               });
             },
             color: Colors.white,
-            elevation: 10,
+            elevation: 5,
             showLabel: true,
             itemLabelStyle: const TextStyle(
               fontWeight: FontWeight.w600,
@@ -121,10 +122,10 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
             durationInMilliSeconds: 300,
             notchColor: Colors.white, // Notch color (Blue shade)
-            bottomBarHeight: 64.0,
+            bottomBarHeight: 30.0,
             showShadow: true,
             kIconSize: 24,
-            kBottomRadius: 20,
+            kBottomRadius: 15,
           ),
         ),
       ),

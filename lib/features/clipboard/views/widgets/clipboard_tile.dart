@@ -56,11 +56,11 @@ class ClipboardTile extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [
-                            const Color(0xFFFFD54F).withValues(alpha: 0.03),
-                            const Color(0xFF8EC5FC).withValues(alpha: 0.02),
-                            const Color(0xFFE0C3FC).withValues(alpha: 0.01),
-                          ],
+                         colors: [   
+            const Color.fromARGB(255, 221, 226, 251).withValues(alpha: 0.8), // Soft white
+            const Color.fromARGB(255, 182, 184, 238).withValues(alpha: 0.5), // Light sky blue
+            const Color.fromARGB(255, 192, 201, 244).withValues(alpha: 0.3), // Soft purple// very light tint
+          ],
                         ),
                       ),
                     ),
